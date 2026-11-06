@@ -2,6 +2,9 @@
 
 A clean, modern web application for converting between different units of measurement across **Length**, **Weight**, **Temperature**, **Area**, and **Volume**. Built using HTML, modern CSS, vanilla JavaScript for micro-interactions, and a Python Flask backend with server-side form processing (`target="_self"`).
 
+Project URL: https://roadmap.sh/projects/unit-converter  
+Repository URL: https://github.com/Subhanulhaq935/Unit_converter
+
 ---
 
 ## Features
