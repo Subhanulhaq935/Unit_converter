@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Unit Converter{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container header-container">
+            <a href="{{ url_for('length_converter') }}" class="brand-logo">
+                <span class="logo-icon">⚖️</span>
+                <span class="logo-text">Unit<span class="logo-accent">Convert</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="{{ url_for('length_converter') }}" class="nav-item {% if active_page == 'length' %}active{% endif %}">
+                    <span class="nav-icon">📏</span> Length
+                </a>
+                <a href="{{ url_for('weight_converter') }}" class="nav-item {% if active_page == 'weight' %}active{% endif %}">
+                    <span class="nav-icon">⚖️</span> Weight
+                </a>
+                <a href="{{ url_for('temperature_converter') }}" class="nav-item {% if active_page == 'temperature' %}active{% endif %}">
+                    <span class="nav-icon">🌡️</span> Temperature
+                </a>
+                <a href="{{ url_for('area_converter') }}" class="nav-item {% if active_page == 'area' %}active{% endif %}">
+                    <span class="nav-icon">🗺️</span> Area
+                </a>
+                <a href="{{ url_for('volume_converter') }}" class="nav-item {% if active_page == 'volume' %}active{% endif %}">
+                    <span class="nav-icon">🧪</span> Volume
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container footer-container">
+            <p>Unit Converter &bull; Server-Side Form Processing &bull; Built with HTML & Python Flask</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

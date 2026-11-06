@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Temperature Converter - Unit Converter{% endblock %}
+
+{% block content %}
+<div class="converter-wrapper">
+    <div class="page-header">
+        <div class="badge badge-temperature">Temperature Conversion</div>
+        <h1 class="page-title">Convert Temperature Scales</h1>
+        <p class="page-subtitle">Convert between Celsius (°C), Fahrenheit (°F), and Kelvin (K).</p>
+    </div>
+
+    <div class="card converter-card">
+        <form method="POST" action="{{ url_for('temperature_converter') }}" target="_self" class="converter-form" novalidate>
+            <div class="form-row">
+                <div class="form-group form-group-value">
+                    <label for="value" class="form-label">Temperature Value</label>
+                    <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="value"
+                            name="value"
+                            class="form-control {% if error %}is-invalid{% endif %}"
+                            placeholder="e.g. 25"
+                            step="any"
+                            value="{{ input_value if input_value is not none else '' }}"
+                            required
+                            autofocus
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="from_unit" class="form-label">From Scale</label>
+                    <div class="select-wrapper">
+                        <select id="from_unit" name="from_unit" class="form-control form-select">
+                            {% for unit_key, unit_name in units %}
+                            <option value="{{ unit_key }}" {% if from_unit == unit_key %}selected{% endif %}>
+                                {{ unit_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="swap-indicator" title="Click to swap units" id="swapUnitsBtn" role="button" tabindex="0">
+                    <span>⇄</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="to_unit" class="form-label">To Scale</label>
+                    <div class="select-wrapper">
+                        <select id="to_unit" name="to_unit" class="form-control form-select">
+                            {% for unit_key, unit_name in units %}
+                            <option value="{{ unit_key }}" {% if to_unit == unit_key %}selected{% endif %}>
+                                {{ unit_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <span class="btn-icon">⚡</span> Convert Value
+                </button>
+                <a href="{{ url_for('temperature_converter') }}" class="btn btn-secondary">
+                    Reset
+                </a>
+            </div>
+        </form>
+
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text">{{ error }}</div>
+        </div>
+        {% endif %}
+
+        {% if result is not none %}
+        <div class="result-box">
+            <div class="result-header">
+                <span class="result-label">Conversion Result</span>
+                <span class="result-status-badge">Calculated</span>
+            </div>
+            <div class="result-main">
+                <span class="result-from">{{ formatted_input }} <span class="unit-tag">{{ from_label }}</span></span>
+                <span class="result-equals">=</span>
+                <span class="result-to">{{ formatted_result }} <span class="unit-tag highlight">{{ to_label }}</span></span>
+            </div>
+            {% if formula_note %}
+            <div class="result-summary">
+                <strong>Formula:</strong> {{ formula_note }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="reference-section">
+        <h2 class="section-title">Common Temperature Points</h2>
+        <div class="grid-units">
+            <div class="unit-chip"><strong>Absolute Zero:</strong> -273.15 °C | -459.67 °F | 0 K</div>
+            <div class="unit-chip"><strong>Water Freezing:</strong> 0 °C | 32 °F | 273.15 K</div>
+            <div class="unit-chip"><strong>Room Temperature:</strong> 20 °C | 68 °F | 293.15 K</div>
+            <div class="unit-chip"><strong>Human Body:</strong> 37 °C | 98.6 °F | 310.15 K</div>
+            <div class="unit-chip"><strong>Water Boiling:</strong> 100 °C | 212 °F | 373.15 K</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
